@@ -4,6 +4,12 @@ export class LoginPage {
   logInButton = "[data-testid=button-submit]";
   topMenu = "[data-testid=top-menu-dropdown-account]";
 
+  /**
+   * @description Logins to app
+   * @param {string} login - User login
+   * @param {string} password - User password
+   * @example loginPage.loginWithCredentials();
+   */
   loginWithCredentials(
     login = Cypress.env("login"),
     password = Cypress.env("password")

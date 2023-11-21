@@ -24,14 +24,20 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add("enterValueIntoField", (fieldTestId, value) => {
-  cy.get(fieldTestId).as("field");
-  cy.get("@field").click();
-  cy.get("@field").type("{selectall}{backspace}");
-  cy.get("@field").type(value);
-  cy.get("@field").should(($el) => {
-    expect(Cypress.dom.isDetached($el)).to.eq(false);
+Cypress.Commands.add("loginViaAPI", () => {
+  cy.request({
+    url: Cypress.config().baseUrl + urls.apiLogInUrl,
+    method: "POST",
+    body: {
+      username: Cypress.env("loginSuperAdmin"),
+      password: Cypress.env("passwordSuperAdmin"),
+    },
+    retryOnStatusCodeFailure: true,
+    retryOnNetworkFailure: true,
+  }).then((res) => {
+    expect(res.status).equal(StatusCodes.OK);
+    const body = res.body;
+
+    cy.wrap({ jwt: body.access, refresh: body.refresh });
   });
-  cy.get("@field").should("have.value", value);
-  cy.get("@field").blur();
 });
