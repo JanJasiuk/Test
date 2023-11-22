@@ -28,6 +28,18 @@ describe("My First Test", () => {
       cy.enterValueIntoField(`[data-testid=${OBJECT_CLASS_NAME}]`, "Name");
     });
 
+    it("Performance test", () => {
+      cy.clock();
+      cy.get("#button1").click();
+      cy.get("#button2").click();
+      cy.get("#button3").click();
+      cy.clock().then((clock) => {
+        const elapsedTime = clock.elapsed;
+
+        expect(elapsedTime).to.be.lessThan(500);
+      });
+    });
+
     it("Send POST request", () => {
       cy.request({
         url: Cypress.config().baseUrl + urls.apiLogInUrl,
