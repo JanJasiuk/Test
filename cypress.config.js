@@ -10,7 +10,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-    baseUrl: "https://catalyst-rc-vnext-e2e.autologyx.com/",
+    baseUrl: "https://www.stxnext.com/",
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
     testIsolation: true,
   },
